@@ -6,6 +6,10 @@ import App from '../App';
 const app = express();
 const port = '1337';
 
+app.use(express.static('public'));
+
+app.use(loadApp);
+
 function loadApp(req, res) {
   const app = renderToString(<App />);
 
@@ -25,5 +29,7 @@ function renderHtml(html) {
         </body>
         </html>`;
 }
-
-app.listen(port);
+console.log('listening');
+app.listen(port, () => {
+  console.log('listening to 1337');
+});
