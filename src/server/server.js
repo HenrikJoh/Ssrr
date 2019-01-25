@@ -3,9 +3,10 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
-import fetch from 'isomorphic-fetch';
+/* import fetch from 'isomorphic-fetch'; */
 import App from '../App';
 import gallery from '../store/reducer';
+import { getPictures } from './api';
 
 const app = express();
 const port = '1337';
@@ -14,28 +15,19 @@ app.use(express.static('public'));
 
 app.use(loadApp);
 
-const dbUrl = 'http://localhost:3000/pictures';
-
-function getPictures() {
-  fetch(dbUrl)
-    .then(data => data.json())
-    .then(result => {
-      console.log(result[0].id);
-    })
-    .catch(err => console.log(err));
-}
-
 function loadApp(req, res) {
-  getPictures();
-  const store = createStore(gallery);
-  const app = renderToString(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-  const newState = store.getState();
-  console.log(newState);
-  res.send(renderHtml(app, newState));
+  getPictures().then(pictures => {
+    const store = createStore(gallery, { pictures });
+    console.log(store.getState());
+    const app = renderToString(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    const newState = store.getState();
+    console.log('new state', newState);
+    res.send(renderHtml(app, newState));
+  });
 }
 
 function renderHtml(app, newState) {
