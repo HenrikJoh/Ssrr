@@ -28,13 +28,13 @@ function getPictures() {
 function loadApp(req, res) {
   getPictures();
   const store = createStore(gallery);
-
   const app = renderToString(
     <Provider store={store}>
       <App />
     </Provider>
   );
   const newState = store.getState();
+  console.log(newState);
   res.send(renderHtml(app, newState));
 }
 

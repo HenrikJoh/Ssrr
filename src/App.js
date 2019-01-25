@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class App extends Component {
+  componentDidMount() {
+    console.log('App', this.props.pictures[0].id);
+  }
   render() {
     return (
       <div>
@@ -10,4 +14,9 @@ class App extends Component {
     );
   }
 }
-export default App;
+
+const mapStateToProps = state => ({
+  pictures: state.pictures
+});
+
+export default connect(mapStateToProps)(App);
