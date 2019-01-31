@@ -1,4 +1,4 @@
-import { FETCH_PICTURES } from './action';
+import { SORT_PICTURES } from './action';
 
 const initialState = {
   pictures: []
@@ -6,7 +6,7 @@ const initialState = {
 
 function gallery(state = initialState, action) {
   switch (action.type) {
-    case FETCH_PICTURES:
+    case SORT_PICTURES:
       return { ...state, pictures: action.pic };
 
     default:

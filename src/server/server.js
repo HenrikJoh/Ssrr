@@ -3,10 +3,10 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
-/* import fetch from 'isomorphic-fetch'; */
 import App from '../App';
 import gallery from '../store/reducer';
 import { getPictures } from './api';
+import { StaticRouter } from 'react-router';
 
 const app = express();
 const port = '1337';
@@ -17,15 +17,16 @@ app.use(loadApp);
 
 function loadApp(req, res) {
   getPictures().then(pictures => {
+    let context = {};
     const store = createStore(gallery, { pictures });
-    console.log(store.getState());
     const app = renderToString(
       <Provider store={store}>
-        <App />
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
       </Provider>
     );
     const newState = store.getState();
-    console.log('new state', newState);
     res.send(renderHtml(app, newState));
   });
 }

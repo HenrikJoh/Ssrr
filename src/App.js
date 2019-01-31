@@ -1,45 +1,26 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchPictures } from './store/action';
+import Pictures from './components/Pictures';
+import { Switch, Route } from 'react-router-dom';
+import Sort from './components/Sort';
 
-const dbUrl = 'http://localhost:3000/pictures';
 class App extends Component {
-  componentDidMount() {
-    this.props.getPicture(dbUrl);
-    console.log('App', this.props.pictures);
-  }
+  componentDidMount() {}
   render() {
-    let picture = this.props.pictures.map(pic => {
-      return (
-        <div key={pic.id}>
-          <p>{pic.title}</p>
-          <img src={pic.imgUrl} alt="pic.title" />
-        </div>
-      );
-    });
     return (
       <div>
-        <h1>SSR gallery</h1>
-        <p>Hejsan</p>
-        {picture}
+        <div>
+          <h1>SSR gallery</h1>
+          <Sort />
+        </div>
+
+        <Switch>
+          <Route path="/" exact component={Pictures} />
+          <Route path="/pictures_order=asc" component={Pictures} />
+          <Route path="/pictures_order=desc" component={Pictures} />
+        </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  pictures: state.pictures
-});
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getPicture: getpic => {
-      dispatch(fetchPictures(getpic));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;
