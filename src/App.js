@@ -15,8 +15,7 @@ class App extends Component {
 
         <Switch>
           <Route path="/" exact component={Pictures} />
-          <Route path="/pictures_order=asc" component={Pictures} />
-          <Route path="/pictures_order=desc" component={Pictures} />
+          <Route path="/sort/:id" component={Pictures} />
         </Switch>
       </div>
     );

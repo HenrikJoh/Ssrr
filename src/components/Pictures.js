@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { getPictures } from '../server/api';
 import { connect } from 'react-redux';
 
 class Pictures extends Component {
-  componentDidMount() {
-    /* getPictures(this.props.match.params); */
-  }
   render() {
     let picture = this.props.pictures.map(pic => {
       return (

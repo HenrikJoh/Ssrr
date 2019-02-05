@@ -13,7 +13,8 @@ class Sort extends Component {
 
   handleChange(event) {
     const value = event.target.value;
-    const redirectVal = '/pictures' + value;
+    console.log(value);
+    const redirectVal = '/sort/pictures' + value;
     this.props.setSort(value);
     console.log('redirecting', redirectVal);
     this.setState({
@@ -32,8 +33,8 @@ class Sort extends Component {
     return (
       <div>
         <select onChange={e => this.handleChange(e)}>
-          <option value="_order=asc">A-Z</option>
-          <option value="_order=desc">Z-A</option>
+          <option value="?_sort=title&_order=asc">A-Z</option>
+          <option value="?_sort=title&_order=desc">Z-A</option>
         </select>
       </div>
     );

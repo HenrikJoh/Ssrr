@@ -10,7 +10,7 @@ export function sortPictures(pic) {
 
 export function fetchSortPicture(sort) {
   return dispatch => {
-    return fetch('http://localhost:3000/pictures?_sort=title&' + sort)
+    return fetch('http://localhost:3000/pictures' + sort)
       .then(data => data.json())
       .then(response => {
         console.log('resp', response);

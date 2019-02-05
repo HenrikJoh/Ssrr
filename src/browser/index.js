@@ -13,6 +13,7 @@ delete window.__PRELOADED_STATE__;
 
 const store = createStore(gallery, preloadedState, applyMiddleware(thunk));
 
+console.log('preloaded', preloadedState);
 hydrate(
   <Provider store={store}>
     <BrowserRouter>

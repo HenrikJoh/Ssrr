@@ -5,8 +5,9 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import App from '../App';
 import gallery from '../store/reducer';
-import { getPictures } from './api';
 import { StaticRouter } from 'react-router';
+import { matchPath } from 'react-router-dom';
+import routes from '../components/routes';
 
 const app = express();
 const port = '1337';
@@ -16,7 +17,13 @@ app.use(express.static('public'));
 app.use(loadApp);
 
 function loadApp(req, res) {
-  getPictures().then(pictures => {
+  console.log(req.url);
+  const currentRoute = routes.find(route => matchPath(req.url, route)) || {};
+  const promise = currentRoute.getInitialData
+    ? currentRoute.getInitialData(req.url)
+    : Promise.resolve();
+
+  promise.then(pictures => {
     let context = {};
     const store = createStore(gallery, { pictures });
     const app = renderToString(
@@ -43,7 +50,7 @@ function renderHtml(app, newState) {
             <script>window.__PRELOADED_STATE__ = ${JSON.stringify(
               newState
             )}</script>
-            <script src="./bundle.js"></script>
+            <script src="/bundle.js"></script>
         </body>
         </html>`;
 }

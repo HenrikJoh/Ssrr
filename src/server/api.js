@@ -1,9 +1,8 @@
 import fetch from 'isomorphic-fetch';
 
-const dbUrl = 'http://localhost:3000/pictures';
-
 export function getPictures(url) {
-  return fetch(dbUrl)
+  console.log('api', url);
+  return fetch('http://localhost:3000/pictures' + url)
     .then(data => data.json())
     .then(result => {
       return result;
