@@ -9,3 +9,12 @@ export function getPictures(url) {
     })
     .catch(err => console.log(err));
 }
+
+export function singlePicture() {
+  return fetch('http://localhost:3000/pictures')
+    .then(data => data.json())
+    .then(result => {
+      return result;
+    })
+    .catch(err => console.log(err));
+}

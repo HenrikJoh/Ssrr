@@ -1,5 +1,6 @@
-import { getPictures } from '../server/api';
+import { getPictures, singlePicture } from '../server/api';
 import Pictures from './Pictures';
+import SinglePicture from './SinglePicture';
 
 const routes = [
   {
@@ -13,6 +14,13 @@ const routes = [
     component: Pictures,
     getInitialData: (path = '') => {
       return getPictures(path.split('/sort/pictures').pop());
+    }
+  },
+  {
+    path: '/single/:id',
+    component: SinglePicture,
+    getInitialData: () => {
+      return singlePicture();
     }
   }
 ];

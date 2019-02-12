@@ -7,18 +7,24 @@ class Sort extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectVal: null
+      redirectVal: null,
+      val: '?_sort=title&_order=asc'
     };
+  }
+  componentDidMount() {
+    if (this.props.sorting === 'desc') {
+      this.setState({ val: '?_sort=title&_order=desc' });
+    }
   }
 
   handleChange(event) {
     const value = event.target.value;
-    console.log(value);
     const redirectVal = '/sort/pictures' + value;
     this.props.setSort(value);
     console.log('redirecting', redirectVal);
     this.setState({
-      redirectVal
+      redirectVal: redirectVal,
+      val: value
     });
   }
 
@@ -32,7 +38,7 @@ class Sort extends Component {
 
     return (
       <div>
-        <select onChange={e => this.handleChange(e)}>
+        <select onChange={e => this.handleChange(e)} value={this.state.val}>
           <option value="?_sort=title&_order=asc">A-Z</option>
           <option value="?_sort=title&_order=desc">Z-A</option>
         </select>
